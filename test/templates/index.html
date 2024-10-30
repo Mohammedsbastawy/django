@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Helpdesk System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>IT Helpdesk</h1>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="#submit-ticket">Submit Ticket</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="tickets">
+            <h2>Open Tickets</h2>
+            <ul>
+                {% for ticket in tickets %}
+                    <li>
+                        <a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.title }}</a> - Status: {{ ticket.status }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section id="submit-ticket">
+            <h2>Submit a New Ticket</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+                
+                <button type="submit">Submit Ticket</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 IT Helpdesk. All rights reserved.</p>
+    </footer>
+</body>
+</html>
